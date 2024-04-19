@@ -128,4 +128,67 @@ router.put('/:eventId', eventController.updateEvent);
 
 router.delete('/:eventId', eventController.deleteEvent);
 
+/**
+ * @openapi
+ * /events/{eventId}:
+ *   delete:
+ *     tags:
+ *       - Events
+ *     summary: Deletes an event.
+ *     description: This endpoint deletes an event identified by its ID.
+ *     parameters:
+ *       - in: path
+ *         name: eventId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of the event to delete.
+ *     responses:
+ *       200:
+ *         description: Event deleted successfully.
+ *       404:
+ *         description: Event not found.
+ */
+
+
+// Ruta para registrar un asistente a un evento
+router.post('/:eventId/attendees', eventController.registerAttendee);
+
+/**
+ * @openapi
+ * /events/{eventId}/attendees:
+ *   post:
+ *     tags:
+ *       - Events
+ *     summary: Registers an attendee for an event.
+ *     description: This endpoint registers an attendee to a specific event by event ID.
+ *     parameters:
+ *       - in: path
+ *         name: eventId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of the event to register the attendee to.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 description: The ID of the user who is registering as an attendee.
+ *             required:
+ *               - userId
+ *     responses:
+ *       201:
+ *         description: Attendee registered successfully.
+ *       404:
+ *         description: Event not found.
+ *       400:
+ *         description: Invalid input data.
+ */
+
+// Exporta el router para poder ser utilizado en otras partes de la aplicación
 module.exports = router;

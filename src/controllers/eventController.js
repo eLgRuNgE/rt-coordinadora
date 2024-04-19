@@ -5,7 +5,11 @@ const eventController = {
     getAllEvents: async (req, res) => {
         try {
             const { rows } = await pool.query('SELECT * FROM events');
-            res.json(rows);
+            if (rows == []) {
+                res.json(rows);
+            } else {
+                res.send('No se han encontrado eventos en base de datos.');
+            }
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

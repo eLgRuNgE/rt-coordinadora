@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const eventRoutes = require('./src/routes/events'); // Ejemplo de rutas para eventos
+const eventRoutes = require('./src/routes/eventRoutes'); // Ejemplo de rutas para eventos
 const swaggerConfig = require('./src/config/swagger');
 
 const app = express();
