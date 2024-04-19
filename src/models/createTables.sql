@@ -23,6 +23,9 @@ CREATE TABLE IF NOT EXISTS events (
     FOREIGN KEY (organizer_id) REFERENCES users (user_id)
 );
 
+ALTER TABLE events
+ADD COLUMN latitude DECIMAL(9,6),
+ADD COLUMN longitude DECIMAL(9,6);
 
 -- Tabla de Asistentes (para registrar usuarios en eventos):
 CREATE TABLE IF NOT EXISTS attendees (

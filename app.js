@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const eventRoutes = require('./src/routes/eventRoutes'); // Ejemplo de rutas para eventos
+const eventRoutes = require('./src/routes/eventRoutes');
+const userRoutes = require('./src/routes/userRoutes');
 const swaggerConfig = require('./src/config/swagger');
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/events', eventRoutes);
+app.use('/api/users', userRoutes);
 
 swaggerConfig.setup(app);
 
