@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { authenticateToken } = require('../middleware/auth');
 const userController = require('../controllers/userController');
 
 /**
@@ -34,7 +35,7 @@ const userController = require('../controllers/userController');
  *         description: Invalid input or user already exists.
  */
 
-router.post('/register', userController.registerUser);
+router.post('/register', authenticateToken, userController.registerUser);
 
 /**
  * @openapi
@@ -94,7 +95,6 @@ router.post('/login', userController.loginUser);
  *       401:
  *         description: Unauthorized.
  */
-
-router.get('/profile', userController.getUserProfile);
+router.get('/profile', authenticateToken, userController.getUserProfile);
 
 module.exports = router;

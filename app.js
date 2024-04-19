@@ -1,4 +1,5 @@
 const express = require('express');
+// const { authenticateToken } = require('./src/middleware/auth');
 const cors = require('cors');
 const eventRoutes = require('./src/routes/eventRoutes');
 const userRoutes = require('./src/routes/userRoutes');
@@ -6,10 +7,12 @@ const swaggerConfig = require('./src/config/swagger');
 
 const app = express();
 
+// Middleare para restringir dominios
 app.use(cors());
+
 app.use(express.json()); 
 
-// Rutas
+// Rutas con autenticacion
 app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
 

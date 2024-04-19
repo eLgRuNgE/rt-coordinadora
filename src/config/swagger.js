@@ -13,14 +13,28 @@ const swaggerOptions = {
                 email: 'fabiancallejas@gmail.com'
             }
         },
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT"
+                }
+            }
+        },
         servers: [
             {
                 url: 'http://localhost:3000/api',
                 description: 'Servidor de Desarrollo'
             }
+        ],
+        security: [
+            {
+                bearerAuth: []
+            }
         ]
     },
-    apis: ['./src/routes/*.js'] // Asegúrate de que esta ruta sea correcta
+    apis: ['./src/routes/*.js']
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
