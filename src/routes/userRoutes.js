@@ -7,7 +7,7 @@ const userController = require('../controllers/userController');
  * /users/register:
  *   post:
  *     tags:
- *       - Users
+ *       - Usuarios
  *     summary: Register a new user.
  *     description: This endpoint registers a new user.
  *     requestBody:
@@ -41,7 +41,7 @@ router.post('/register', userController.registerUser);
  * /users/login:
  *   post:
  *     tags:
- *       - Users
+ *       - Usuarios
  *     summary: User login.
  *     description: This endpoint authenticates a user by username and password.
  *     requestBody:
@@ -79,7 +79,7 @@ router.post('/login', userController.loginUser);
  * /users/profile:
  *   get:
  *     tags:
- *       - Users
+ *       - Usuarios
  *     summary: Get user profile.
  *     description: This endpoint retrieves the user's profile details.
  *     security:

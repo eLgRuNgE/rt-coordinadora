@@ -32,7 +32,7 @@ const eventController = {
     // Controlador para crear un nuevo evento
     createEvent: async (req, res) => {
         const { title, description, start_time, end_time, location, organizer_id } = req.body;
-        const mapboxAccessToken = process.env.MAPBOX_ACCESS_TOKEN; // Asegúrate de que esto está en tu .env
+        const mapboxAccessToken = process.env.MAPBOX_ACCESS_TOKEN;
 
         try {
             // Geocodificar la dirección para obtener latitud y longitud
@@ -42,7 +42,7 @@ const eventController = {
                 }
             });
 
-            // Tomar las coordenadas del primer resultado
+            // Tomo las coordenadas del primer resultado
             const [longitude, latitude] = geocodingResponse.data.features[0].center;
 
             // Insertar el evento en la base de datos con latitud y longitud
@@ -54,10 +54,7 @@ const eventController = {
             // Devolver el evento creado
             res.status(201).json(rows[0]);
         } catch (error) {
-            // Manejar los errores aquí
             if (error.response) {
-                // La solicitud fue hecha y el servidor respondió con un código de estado
-                // que cae fuera del rango de 2xx
                 console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
@@ -75,8 +72,6 @@ const eventController = {
     // Controlador para actualizar un evento existente
     updateEvent: async (req, res) => {
         const { eventId } = req.params;
-        // Obtener los datos que se van a actualizar del cuerpo de la solicitud
-        // De nuevo, este es un ejemplo simplificado
         const { title, description, start_time, end_time, location } = req.body;
 
         try {
@@ -133,7 +128,7 @@ const eventController = {
         const { eventId } = req.params;
         try {
             const { rows } = await pool.query(
-                'SELECT users.* FROM attendees JOIN users ON attendees.user_id = users.user_id WHERE attendees.event_id = $1',
+                'SELECT users.user_id, users.username, users.email FROM attendees JOIN users ON attendees.user_id = users.user_id WHERE attendees.event_id = $1',
                 [eventId]
             );
             if (rows.length === 0) {
@@ -149,28 +144,28 @@ const eventController = {
     getNearbyPlaces: async (req, res) => {
         const { eventId } = req.params;
         try {
-            // Primero, obtener las coordenadas del evento
-            const eventResult = await pool.query('SELECT latitude, longitude FROM events WHERE event_id = $1', [eventId]);
-            if (eventResult.rows.length === 0) {
+            const eventLocalization = await pool.query('SELECT latitude, longitude FROM events WHERE event_id = $1', [eventId]);
+            if (eventLocalization.rows.length === 0) {
                 return res.status(404).json({ message: "Evento no encontrado." });
             }
             
-            const { latitude, longitude } = eventResult.rows[0];
+            const { latitude, longitude } = eventLocalization.rows[0];
 
-            // Luego, utilizar Mapbox para encontrar lugares cercanos
+            // Utilizo Axios y la api de Mapbox para encontrar lugares cercanos
             const response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json`, {
                 params: {
                     access_token: process.env.MAPBOX_ACCESS_TOKEN,
-                    limit: 5 // Limita los resultados a los 5 más relevantes
+                    limit: 5, // Limito los resultados a los 5 más relevantes
+                    types: 'poi' // Se agrega un tipo de lugar, como 'poi' (point of interest)
                 }
             });
             
-            res.json(response.data.features); // Asumiendo que features contiene los lugares
+            res.json(response.data.features); // Asumo que features contiene los lugares
         } catch (error) {
             console.error('Error al obtener lugares cercanos:', error);
             res.status(500).json({ error: error.message });
         }
-    },
+    }
 
 };
 

@@ -6,6 +6,8 @@ const eventController = require('../controllers/eventController');
  * @openapi
  * /events:
  *   get:
+ *     tags:
+ *       - Consulta Eventos
  *     summary: Retrieves a list of events.
  *     responses:
  *       200:
@@ -23,6 +25,8 @@ router.get('/', eventController.getAllEvents);
  * @openapi
  * /events/{eventId}:
  *   get:
+ *     tags:
+ *       - Consulta Eventos
  *     summary: Retrieves a specific event by ID.
  *     parameters:
  *       - in: path
@@ -51,7 +55,7 @@ router.get('/:eventId', eventController.getEventById);
  * /events:
  *   post:
  *     tags:
- *       - Events
+ *       - Eventos
  *     summary: Creates a new event.
  *     description: This endpoint creates a new event with the data provided in the request body, including geocoding the location to latitude and longitude.
  *     requestBody:
@@ -107,7 +111,7 @@ router.post('/', eventController.createEvent);
  * /events/{eventId}:
  *   put:
  *     tags:
- *       - Events
+ *       - Eventos
  *     summary: Updates an existing event.
  *     description: This endpoint updates an existing event identified by its ID with the data provided in the request body.
  *     parameters:
@@ -136,7 +140,7 @@ router.put('/:eventId', eventController.updateEvent);
  * /events/{eventId}:
  *   delete:
  *     tags:
- *       - Events
+ *       - Eventos
  *     summary: Deletes an event.
  *     description: This endpoint deletes an event identified by its ID.
  *     parameters:
@@ -160,7 +164,7 @@ router.delete('/:eventId', eventController.deleteEvent);
  * /events/{eventId}/attendees:
  *   get:
  *     tags:
- *       - Events
+ *       - Eventos
  *     summary: Retrieves all attendees of a specific event.
  *     parameters:
  *       - in: path
@@ -188,7 +192,7 @@ router.get('/:eventId/attendees', eventController.getEventAttendees);
  * /events/{eventId}/attendees:
  *   post:
  *     tags:
- *       - Events
+ *       - Eventos
  *     summary: Registers an attendee to an event.
  *     description: Adds a user as an attendee to the specified event by eventId.
  *     parameters:
@@ -234,7 +238,7 @@ router.post('/:eventId/attendees', eventController.registerAttendee);
  * /events/{eventId}/places:
  *   get:
  *     tags:
- *       - Events
+ *       - Eventos
  *     summary: Retrieves places near the event location.
  *     description: This endpoint retrieves a list of places near the event's geolocation.
  *     parameters:
