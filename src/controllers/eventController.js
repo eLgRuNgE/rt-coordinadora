@@ -151,16 +151,41 @@ const eventController = {
             
             const { latitude, longitude } = eventLocalization.rows[0];
 
-            // Utilizo Axios y la api de Mapbox para encontrar lugares cercanos
+            // Primero verificamos si ya tenemos lugares guardados para este evento
+            const cachedPlaces = await pool.query('SELECT * FROM nearby_places WHERE event_id = $1', [eventId]);
+            if (cachedPlaces.rows.length > 0) {
+                return res.json(cachedPlaces.rows.map(place => ({
+                    name: place.name,
+                    address: place.address,
+                    latitude: place.latitude,
+                    longitude: place.longitude
+                })));
+            }
+
+            // Si no hay lugares en caché, hacemos una llamada a Mapbox
             const response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json`, {
                 params: {
                     access_token: process.env.MAPBOX_ACCESS_TOKEN,
-                    limit: 5, // Limito los resultados a los 5 más relevantes
-                    types: 'poi' // Se agrega un tipo de lugar, como 'poi' (point of interest)
+                    limit: 5,
+                    types: 'poi'
                 }
             });
-            
-            res.json(response.data.features); // Asumo que features contiene los lugares
+
+            // Guardamos los lugares en la base de datos para futuras consultas
+            for (let feature of response.data.features) {
+                const { text: name, place_name: address, geometry: { coordinates } } = feature;
+                const [long, lat] = coordinates;
+                await pool.query('INSERT INTO nearby_places (event_id, name, address, latitude, longitude) VALUES ($1, $2, $3, $4, $5)', [eventId, name, address, lat, long]);
+            }
+
+            // Consultamos de nuevo para obtener los lugares recién guardados
+            const newPlaces = await pool.query('SELECT * FROM nearby_places WHERE event_id = $1', [eventId]);
+            res.json(newPlaces.rows.map(place => ({
+                name: place.name,
+                address: place.address,
+                latitude: place.latitude,
+                longitude: place.longitude
+            })));
         } catch (error) {
             console.error('Error al obtener lugares cercanos:', error);
             res.status(500).json({ error: error.message });

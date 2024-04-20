@@ -235,7 +235,7 @@ router.post('/:eventId/attendees', eventController.registerAttendee);
 
 /**
  * @openapi
- * /events/{eventId}/places:
+ * /events/{eventId}/nearby_places:
  *   get:
  *     tags:
  *       - Consulta Eventos
@@ -274,7 +274,7 @@ router.post('/:eventId/attendees', eventController.registerAttendee);
  *       404:
  *         description: Event not found.
  */
-router.get('/:eventId/places', eventController.getNearbyPlaces);
+router.get('/:eventId/nearby_places', eventController.getNearbyPlaces);
 
 
 /**
