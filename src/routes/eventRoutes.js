@@ -164,7 +164,7 @@ router.delete('/:eventId', eventController.deleteEvent);
  * /events/{eventId}/attendees:
  *   get:
  *     tags:
- *       - Eventos
+ *       - Consulta Eventos
  *     summary: Retrieves all attendees of a specific event.
  *     parameters:
  *       - in: path
@@ -238,7 +238,7 @@ router.post('/:eventId/attendees', eventController.registerAttendee);
  * /events/{eventId}/places:
  *   get:
  *     tags:
- *       - Eventos
+ *       - Consulta Eventos
  *     summary: Retrieves places near the event location.
  *     description: This endpoint retrieves a list of places near the event's geolocation.
  *     parameters:

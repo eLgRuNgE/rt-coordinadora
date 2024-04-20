@@ -17,15 +17,14 @@ CREATE TABLE IF NOT EXISTS events (
     description TEXT,
     start_time TIMESTAMP WITH TIME ZONE NOT NULL,
     end_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    latitude DECIMAL(9,6),
+    longitude DECIMAL(9,6);
     location VARCHAR(255),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (organizer_id) REFERENCES users (user_id)
 );
 
-ALTER TABLE events
-ADD COLUMN latitude DECIMAL(9,6),
-ADD COLUMN longitude DECIMAL(9,6);
 
 -- Tabla de Asistentes (para registrar usuarios en eventos):
 CREATE TABLE IF NOT EXISTS attendees (
