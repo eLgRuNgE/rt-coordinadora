@@ -3,18 +3,20 @@ const express = require('express');
 const cors = require('cors');
 const eventRoutes = require('./src/routes/eventRoutes');
 const userRoutes = require('./src/routes/userRoutes');
+const bulkDataRoutes = require('./src/routes/bulkDataUploadRoutes');
 const swaggerConfig = require('./src/config/swagger');
 
 const app = express();
 
+// Middlewares
 // Middleare para restringir dominios
 app.use(cors());
-
 app.use(express.json()); 
 
-// Rutas con autenticacion
+// Rutas
 app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/bulk-upload', bulkDataRoutes);
 
 swaggerConfig.setup(app);
 
