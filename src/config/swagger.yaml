@@ -1,0 +1,431 @@
+openapi: 3.0.0
+info:
+  title: Reto Técnico Coordinadora - Plataforma de Gestión de Eventos API
+  version: 0.0.1
+  description: Una API para crear, promocionar y gestionar eventos
+  contact:
+    name: Fabian Callejas
+    email: fabiancallejas@gmail.com
+servers:
+  - url: 'http://localhost:3000/api'
+    description: Servidor Reto
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: The unique identifier for the user.
+        username:
+          type: string
+          description: The user's username.
+        email:
+          type: string
+          description: The user's email.
+    Event:
+      type: object
+      required:
+        - title
+        - start_time
+        - end_time
+        - location
+        - organizer_id
+      properties:
+        event_id:
+          type: integer
+          description: The unique identifier for the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: A detailed description of the event.
+        start_time:
+          type: string
+          format: date-time
+          description: The start time of the event.
+        end_time:
+          type: string
+          format: date-time
+          description: The end time of the event.
+        location:
+          type: string
+          description: The textual location of the event.
+        latitude:
+          type: number
+          format: float
+          description: The latitude of the event location.
+        longitude:
+          type: number
+          format: float
+          description: The longitude of the event location.
+        organizer_id:
+          type: integer
+          description: The ID of the organizer of the event.
+security:
+  - bearerAuth: []
+
+paths:
+  /users/login:
+    post:
+      tags:
+        - 1.1. Usuarios
+      summary: User login.
+      description: This endpoint authenticates a user by username and password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: User authenticated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        401:
+          description: Authentication failed.
+
+  /users/register:
+    post:
+      tags:
+        - 1.1. Usuarios
+      summary: Register a new user.
+      description: This endpoint registers a new user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+                - email
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: User registered successfully.
+        400:
+          description: Invalid input or user already exists.
+
+  /users/profile:
+    get:
+      tags:
+        - 1.1. Usuarios
+      summary: Get user profile.
+      description: This endpoint retrieves the user's profile details.
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: User profile retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          description: Unauthorized.
+
+  /events/{eventId}:
+    get:
+      tags:
+        - 1.2. Consulta Eventos
+      summary: Retrieves a specific event by ID.
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: integer
+          description: The unique identifier of the event to retrieve.
+      responses:
+        200:
+          description: An event object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        404:
+          description: Event not found.
+        500:
+          description: Server error.
+    put:
+      tags:
+        - 1.3. Eventos
+      summary: Updates an existing event.
+      description: This endpoint updates an existing event identified by its ID with the data provided in the request body.
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: integer
+          description: Numeric ID of the event to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        200:
+          description: Event updated successfully.
+        404:
+          des
+    delete:
+      tags:
+        - 1.3. Eventos
+      summary: Deletes an event.
+      description: This endpoint deletes an event identified by its ID.
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: integer
+          description: Numeric ID of the event to delete.
+      responses:
+        200:
+          description: Event deleted successfully.
+        404:
+          description: Event not found.
+
+  /events/{eventId}/attendees:
+    get:
+      tags:
+        - 1.2. Consulta Eventos
+      summary: Retrieves all attendees of a specific event.
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the event to get attendees for.
+      responses:
+        200:
+          description: A list of attendees.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        404:
+          description: No attendees found or event not found.
+    post:
+      tags:
+        - 1.3. Eventos
+      summary: Registers an attendee to an event.
+      description: Adds a user as an attendee to the specified event by eventId.
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the event to which the attendee will be added.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+              properties:
+                userId:
+                  type: integer
+                  description: The ID of the user who is registering as an attendee.
+      responses:
+        201:
+          description: Attendee registered successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Attendee registered successfully.
+        400:
+          description: Bad request, possibly due to missing userId or invalid eventId.
+        404:
+          description: Event not found.
+
+  /events:
+    get:
+        tags:
+          - 1.2. Consulta Eventos
+        summary: Retrieves a list of events.
+        responses:
+          200:
+            description: A list of events.
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Event'
+    post:
+      tags:
+        - 1.3. Eventos
+      summary: Creates a new event.
+      description: This endpoint creates a new event with the data provided in the request body, including geocoding the location to latitude and longitude.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - description
+                - start_time
+                - end_time
+                - location
+                - organizer_id
+              properties:
+                title:
+                  type: string
+                  description: The title of the event.
+                description:
+                  type: string
+                  description: A detailed description of the event.
+                start_time:
+                  type: string
+                  format: date-time
+                  description: The start time of the event.
+                end_time:
+                  type: string
+                  format: date-time
+                  description: The end time of the event.
+                location:
+                  type: string
+                  description: The textual location of the event, which will be geocoded to latitude and longitude.
+                organizer_id:
+                  type: integer
+                  description: The ID of the user or organizer creating the event.
+      responses:
+        201:
+          description: Event created successfully, including geocoded latitude and longitude.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        400:
+          description: Invalid request body or parameters.
+        500:
+          description: Error creating the event or geocoding the location.
+
+  /bulk-upload/upload:
+    post:
+      tags:
+        - 2. Carga Masiva (Manejo de Librerías y Procesamiento de Archivos Excel)
+      summary: Upload an Excel file for bulk event data upload.
+      description: This endpoint allows users to upload Excel files containing event information for processing and storing in the database.
+      requestBody:
+        description: Excel file to upload
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The Excel file to upload.
+      responses:
+        200:
+          description: Data uploaded successfully.
+        401:
+          description: Unauthorized, invalid or missing JWT token.
+        500:
+          description: Internal server error.
+
+  /events/{eventId}/nearby_places:
+    get:
+      tags:
+        - 3. Ubicaciones cercanas a los eventos (Manejo de Ubicaciones Cercanas con Mapbox)
+      summary: Retrieves places near the event location.
+      description: This endpoint retrieves a list of places near the event's geolocation.
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the event.
+      responses:
+        200:
+          description: A list of nearby places.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: string
+                    place_name:
+                      type: string
+                    geometry:
+                      type: object
+                      properties:
+                        coordinates:
+                          type: array
+                          items:
+                            type: number
+        404:
+          description: Event not found.
+
+  /attendees-by-weekday:
+    get:
+      tags:
+        - 4. Asistentes a Eventos (Manejo Avanzado de Matrices)
+      summary: Retrieve the count of attendees by day of the week
+      description: Returns a JSON object with the count of attendees for each day of the week based on the list of events.
+      responses:
+        200:
+          description: A JSON object containing the counts of attendees by day of the week.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  description: The count of attendees.
+        400:
+          description: Bad request if the query could not be processed.
+        500:
+          description: Internal server error if the processing fails.

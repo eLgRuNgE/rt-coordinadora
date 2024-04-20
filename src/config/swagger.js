@@ -1,5 +1,8 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const yaml = require('js-yaml');
+const fs = require('fs');
+const path = require('path');
 
 const swaggerOptions = {
     swaggerDefinition: {
@@ -37,10 +40,10 @@ const swaggerOptions = {
     apis: ['./src/routes/*.js']
 };
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
+const swaggerDocument = yaml.load(fs.readFileSync(path.join(__dirname, 'swagger.yaml'), 'utf8'));
 
 function setup(app) {
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 module.exports = { setup };

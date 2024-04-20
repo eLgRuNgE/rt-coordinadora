@@ -9,13 +9,12 @@ const swaggerConfig = require('./src/config/swagger');
 const app = express();
 
 // Middlewares
-// Middleare para restringir dominios
-app.use(cors());
+app.use(cors());  // Middleare para restringir dominios
 app.use(express.json()); 
 
 // Rutas
-app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/events', eventRoutes);
 app.use('/api/bulk-upload', bulkDataRoutes);
 
 swaggerConfig.setup(app);

@@ -1,5 +1,6 @@
 const axios = require('axios');
 const pool = require('../config/db');
+const { getAttendeesByWeekday } = require('../services/eventService');
 
 
 const eventController = {
@@ -190,8 +191,17 @@ const eventController = {
             console.error('Error al obtener lugares cercanos:', error);
             res.status(500).json({ error: error.message });
         }
-    }
+    },
 
+    fetchAttendeesByWeekday: async (req, res) => {
+        try {
+            const result = await getAttendeesByWeekday();
+            res.json(result);
+        } catch (error) {
+            console.error('Error al obtener la cantidad de asistentes por día de la semana', error);
+            res.status(500).json({ error: 'Internal Server Error', details: error.message });
+        }
+    }
 };
 
 module.exports = eventController;
