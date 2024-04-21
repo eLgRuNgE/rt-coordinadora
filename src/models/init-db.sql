@@ -1,3 +1,6 @@
+CREATE USER c00rd1n4d0r4 WITH PASSWORD 'ToJ1@GO1_o25x';
+CREATE DATABASE rt_coordinadora;
+GRANT ALL PRIVILEGES ON DATABASE rt_coordinadora TO c00rd1n4d0r4;
 
 -- Tabla de Usuarios (para gestionar el registro de usuarios y autenticación):
 CREATE TABLE IF NOT EXISTS users (
@@ -7,7 +10,6 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
-
 
 -- Tabla de Eventos (para almacenar detalles del evento):
 CREATE TABLE IF NOT EXISTS events (
@@ -25,7 +27,6 @@ CREATE TABLE IF NOT EXISTS events (
     FOREIGN KEY (organizer_id) REFERENCES users (user_id)
 );
 
-
 -- Tabla de Asistentes (para registrar usuarios en eventos):
 CREATE TABLE IF NOT EXISTS attendees (
     attendee_id SERIAL PRIMARY KEY,
@@ -35,7 +36,6 @@ CREATE TABLE IF NOT EXISTS attendees (
     FOREIGN KEY (event_id) REFERENCES events (event_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
-
 
 -- Tabla de Lugares Cercanos (opcional, solo si decides almacenar lugares cercanos en tu base de datos):
 CREATE TABLE IF NOT EXISTS nearby_places (
@@ -47,3 +47,8 @@ CREATE TABLE IF NOT EXISTS nearby_places (
     longitude DECIMAL(9,6),
     FOREIGN KEY (event_id) REFERENCES events (event_id)
 );
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON attendees TO c00rd1n4d0r4;
+GRANT SELECT, INSERT, UPDATE, DELETE ON events TO c00rd1n4d0r4;
+GRANT SELECT, INSERT, UPDATE, DELETE ON nearby_places TO c00rd1n4d0r4;
+GRANT SELECT, INSERT, UPDATE, DELETE ON users TO c00rd1n4d0r4;

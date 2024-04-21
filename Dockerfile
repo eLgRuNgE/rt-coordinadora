@@ -1,22 +1,22 @@
 # Dockerfile
 
 # Utiliza una imagen base de Node.js v lts-alpine3.19
-FROM node:20.12.2-alpine3.18
+FROM node:20.12.2-alpine3.19
 
 # Crea el directorio de trabajo para la aplicación
-WORKDIR /Users/fabiancallejas/DevelopmentLocal-MBP_XVII/PruebasTécnicas/Coordinadora/rt-coordinadora
+WORKDIR /usr/src/app
 
-# Instala las dependencias de la aplicación
+# Copia los archivos de definición de dependencias primero para aprovechar la cache de Docker
 COPY package*.json ./
 
 # Instala las dependencias de Node.js
 RUN npm install
 
-# Bundle app source
+# Copia el resto del código fuente de la aplicación
 COPY . .
 
-# Expone el puerto que tu app utiliza
+# Se expone el puerto que tu app utiliza
 EXPOSE 3000
 
-# Define el comando para correr la app
+# Ejecuto el comando para correr la app
 CMD [ "node", "app.js" ]
