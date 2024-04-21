@@ -1,5 +1,7 @@
 #!/bin/bash
 
+clear
+
 # Detener todos los servicios primero (opcional)
 echo "Deteniendo servicios existentes..."
 docker-compose down

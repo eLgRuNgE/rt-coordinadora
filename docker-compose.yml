@@ -6,27 +6,25 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql://c00rd1n4d0r4:ToJ1@GO1_o25x@db:5432/rt_coordinadora
+      DATABASE_URL: ${DATABASE_URL}
     deploy:
       replicas: 5
       restart_policy:
         condition: on-failure
 
   db:
-    image: postgres:15.6
-    environment:
-      POSTGRES_DB: rt_coordinadora
-      POSTGRES_USER: c00rd1n4d0r4
-      POSTGRES_PASSWORD: ToJ1@GO1_o25x
-    volumes:
-      - ./data/postgresql:/var/lib/postgresql/data
-      - ./models:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+    image: postgres:15.6-alpine3.19
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+      - ./src/models:/docker-entrypoint-initdb.d
     deploy:
-      replicas: 5
+      replicas: 1
       restart_policy:
         condition: on-failure
-
-volumes:
-  pgdata:

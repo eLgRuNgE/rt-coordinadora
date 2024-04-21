@@ -1,6 +1,24 @@
-CREATE USER c00rd1n4d0r4 WITH PASSWORD 'ToJ1@GO1_o25x';
-CREATE DATABASE rt_coordinadora;
-GRANT ALL PRIVILEGES ON DATABASE rt_coordinadora TO c00rd1n4d0r4;
+-- Crear usuario solo si no existe
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'c00rd1n4d0r4') THEN
+        CREATE ROLE c00rd1n4d0r4 WITH LOGIN PASSWORD 'ToJ1@GO1_o25x';
+    END IF;
+END
+$$;
+
+-- Crear base de datos solo si no existe
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_database WHERE datname = 'rt_coordinadora') THEN
+        CREATE DATABASE rt_coordinadora;
+        GRANT ALL PRIVILEGES ON DATABASE rt_coordinadora TO c00rd1n4d0r4;
+    END IF;
+END
+$$;
+
+-- Conectar a la base de datos recién creada
+\c rt_coordinadora
 
 -- Tabla de Usuarios (para gestionar el registro de usuarios y autenticación):
 CREATE TABLE IF NOT EXISTS users (
@@ -20,7 +38,7 @@ CREATE TABLE IF NOT EXISTS events (
     start_time TIMESTAMP WITH TIME ZONE NOT NULL,
     end_time TIMESTAMP WITH TIME ZONE NOT NULL,
     latitude DECIMAL(9,6),
-    longitude DECIMAL(9,6);
+    longitude DECIMAL(9,6),
     location VARCHAR(255),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
