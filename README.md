@@ -30,7 +30,7 @@ Se realiza el desarrollo de una **API RESTful** para una plataforma de gestión 
 
 ## ⚠️ Requerimientos:
 - Tener conexión a internet :trollface:.
-- Tener instalado [docker](https://www.docker.com/)
+- Tener instalado [docker](https://www.docker.com/).
 - Se requieren los puertos 3000 y 5432 libres para el correcto funcionamiento de la app y posgreSQL.
 - Para despliegue local requiere:
     * Node v20.11.1
@@ -98,7 +98,7 @@ La aplicación se compone de 13 endpoints disponibles y agrupados. A continuaci�
 }
 ```
 - Respuestas:
-  - `200 OK`: Usuario autenticado exitosamente. #Devuelve un token JWT#.
+  - `200 OK`: Usuario autenticado exitosamente. 🔑 **<span style="color:green">Devuelve un token JWT</span>**.
   - `401 Unauthorized`: Fallo de autenticación.
 
 #### 2. Registro de Nuevo Usuario
@@ -273,7 +273,7 @@ La aplicación se compone de 13 endpoints disponibles y agrupados. A continuaci�
 Para obtener información detallada sobre los esquemas de datos utilizados, consulta el archivo /src/config/swagger.yaml.
 
 
-# Base de Datos
+# 📚 Base de Datos
 Se utiliza el motor de base de datos PosgreSQL.
 
 ## Esquemas de Datos
@@ -337,10 +337,10 @@ Se utiliza el motor de base de datos PosgreSQL.
 | FOREIGN KEY (event_id) REFERENCES events (event_id) |
 
 
-# Hola, mi nombre es Fabian Callejas. Contactame:
+# 🤚🏻 Contacto
 
-🧑‍💻 Desarrollado por **Fabián A. Callejas Varela**
-😎 Contacto: [LinkedIn](https://www.linkedin.com/in/fabiancallejas/)
+- 🧑‍💻 Desarrollado por **Fabián A. Callejas Varela**
+- 😎 Contacto: [LinkedIn](https://www.linkedin.com/in/fabiancallejas/)
 
 ### Perfil de GitHub
 
