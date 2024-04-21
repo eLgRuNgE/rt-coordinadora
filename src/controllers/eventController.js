@@ -111,18 +111,34 @@ const eventController = {
     // Controlador para registrar un asistente a un evento
     registerAttendee: async (req, res) => {
         const { eventId } = req.params;
-        const { userId } = req.body; // Suponiendo que el ID del usuario viene en el cuerpo de la solicitud
+        const { userId } = req.body;
 
         try {
+            // Primero, verificamos si el usuario ya está registrado en el evento
+            const existingAttendee = await pool.query(
+                'SELECT * FROM attendees WHERE event_id = $1 AND user_id = $2',
+                [eventId, userId]
+            );
+
+            // Si ya está registrado, devolvemos un mensaje indicándolo
+            if (existingAttendee.rows.length > 0) {
+                return res.status(409).json({ message: "El usuario ya está registrado como asistente en este evento." });
+            }
+
+            // Si no está registrado, procedemos a insertarlo
             const { rows } = await pool.query(
                 'INSERT INTO attendees (event_id, user_id) VALUES ($1, $2) RETURNING *',
                 [eventId, userId]
             );
+
+            // Devolvemos el asistente registrado
             res.status(201).json(rows[0]);
         } catch (error) {
+            console.error('Error al registrar asistente:', error);
             res.status(500).json({ error: error.message });
         }
-    },
+    };
+
 
     // Controlador para consultar los asistentes a un evento
     getEventAttendees: async (req, res) => {
