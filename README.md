@@ -337,6 +337,10 @@ Se utiliza el motor de base de datos PosgreSQL.
 | FOREIGN KEY (event_id) REFERENCES events (event_id) |
 
 
+# 🤓 Conocimientos sobre Servidores, Infraestructura y DevOps 
+- Acá [DevOps](DevOps.md) se tiene una documentación detallada sobre los Triggers, Despliegues y Rollback en el contexto de la implementación de CI/CD con Jenkins y Docker para este reto técnico.
+- Acá [Arquitectura](Architecture.md) se tiene una documentación de como realizar una arquitectura híbrida para una API resiliente, idempotente y escalable, combinando on-premise y cloud, para el manejo de este reto técnico.
+
 # 🤚🏻 Contacto
 
 - 🧑‍💻 Desarrollado por **Fabián A. Callejas Varela**
