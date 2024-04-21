@@ -1,5 +1,8 @@
 # Implementación de CI/CD con Jenkins
 
+[![jenkins](https://img.shields.io/badge/jenkins-red?style=for-the-badge&logo=jenkins&logoColor=white&labelColor=101010)](https://www.jenkins.io)
+
+
 ## Descripción
 
 A continuación se describe la configuración de Jenkins para implementar un flujo de integración y despliegue continuo para la aplicación de gestión de eventos, utilizando contenedores Docker.
@@ -22,22 +25,22 @@ Se deben instalar los siguientes plugins en Jenkins:
 ### Configuración del Repositorio
 
 1. Se debe configurar un nuevo proyecto en Jenkins para la aplicación.
-2. Conecte el proyecto al repositorio de código fuente.
+2. Conectar el proyecto al repositorio de código fuente.
 3. Luego se especifica la ubicación del Dockerfile y el docker-compose en el repositorio.
-    - Dockerfile (./Dockerfile): El archivo Dockerfile define la configuración necesaria para construir la imagen Docker de la aplicación. Este esta ubicado en la raíz del repositorio.
-    - Docker-compose (./docjer-compose.yml): El archivo docker-compose describe los servicios necesarios para ejecutar la aplicación, como la configuración de contenedores, redes y volúmenes. Este esta ubicado en la raíz del repositorio.
+    - Dockerfile (`./Dockerfile`): El archivo Dockerfile define la configuración necesaria para construir la imagen Docker de la aplicación. Este esta ubicado en la raíz del repositorio.
+    - Docker-compose (`./docjer-compose.yml`): El archivo docker-compose describe los servicios necesarios para ejecutar la aplicación, como la configuración de contenedores, redes y volúmenes. Este esta ubicado en la raíz del repositorio.
 
 ### Pipelines
 
-Cree un `Jenkinsfile` en el repositorio que defina los pasos del pipeline:
+Se debe crear un `Jenkinsfile` en el repositorio que defina los pasos del pipeline:
 
 ```groovy
 pipeline {
     agent any
     stages {
-        stage('Clonar Repositorio') {
+        stage('Clonar Repositorio del Reto Técnico de Coordinadora') {
             steps {
-                git 'https://ruta-al-repositorio.git'
+                git 'https://github.com/eLgRuNgE/rt-coordinadora.git'
             }
         }
         stage('Construir Imagen Docker') {
@@ -90,7 +93,7 @@ Con esta configuración, Jenkins ejecutará automáticamente el pipeline cada ve
 
 1. En la configuración del proyecto Jenkins, vaya a la sección de "Configuración del Pipeline".
 2. Seleccione "Pipeline script" como la definición del pipeline.
-3. Agregue un cronograma en el campo de "Pipeline Triggers" utilizando la sintaxis cron. Por ejemplo, para ejecutar el pipeline todos los días a las 3 a.m., puede usar `0 3 * * *`.
+3. Crear o agregar un cronograma en el campo de "Pipeline Triggers" utilizando la sintaxis cron. Por ejemplo, para ejecutar el pipeline todos los días a las 3 a.m., puede usar `0 3 * * *`.
 4. Guarde la configuración.
 
 Con esta configuración, Jenkins ejecutará automáticamente el pipeline según el cronograma especificado.
