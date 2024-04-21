@@ -6,12 +6,12 @@ Esta es la arquitectura que he diseñado para nuestra API, combinando lo mejor d
 
 ## Diagrama
 
-![Diagrama de Componentes de la API](https://raw.githubusercontent.com/eLgRuNgE/rt-coordinadora/main/static/img/DiagramaDeComponentesAPI.png)
+![Diagrama Arquitectónico](https://raw.githubusercontent.com/eLgRuNgE/rt-coordinadora/main/static/img/DiagramaDeComponentesAPI.png)
 
-`https://drive.google.com/file/d/1Q44QQiTlNHo9ZHIa1acvOhdGCdbXWm2p/view` 
+- Link a diagrama externo:
+[Diagrama Arquitectónico (Drive)](https://drive.google.com/file/d/1Q44QQiTlNHo9ZHIa1acvOhdGCdbXWm2p/view)
 
-
-## Componentes Clave
+z## Componentes Clave
 
 - **Load Balancer:** Equilibra el tráfico entre todas las instancias de la API para asegurar una distribución uniforme y evitar sobrecargas.
 - **API Gateway:** Sirve como punto de entrada único para nuestras solicitudes, proporcionando seguridad, gestión de tráfico y monitoreo centralizado.
