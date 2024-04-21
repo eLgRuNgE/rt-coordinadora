@@ -114,18 +114,37 @@ const eventController = {
         const { userId } = req.body;
 
         try {
-            // Primero, verificamos si el usuario ya está registrado en el evento
+            // Verificamos si el evento existe
+            const eventExists = await pool.query(
+                'SELECT * FROM events WHERE event_id = $1',
+                [eventId]
+            );
+
+            if (eventExists.rows.length === 0) {
+                return res.status(404).json({ message: "Evento no encontrado." });
+            }
+
+            // Verificamos si el usuario existe
+            const userExists = await pool.query(
+                'SELECT * FROM users WHERE user_id = $1',
+                [userId]
+            );
+
+            if (userExists.rows.length === 0) {
+                return res.status(404).json({ message: "Usuario no encontrado." });
+            }
+
+            // Verificamos si el usuario ya está registrado como asistente en el evento
             const existingAttendee = await pool.query(
                 'SELECT * FROM attendees WHERE event_id = $1 AND user_id = $2',
                 [eventId, userId]
             );
 
-            // Si ya está registrado, devolvemos un mensaje indicándolo
             if (existingAttendee.rows.length > 0) {
                 return res.status(409).json({ message: "El usuario ya está registrado como asistente en este evento." });
             }
 
-            // Si no está registrado, procedemos a insertarlo
+            // Si no está registrado y tanto el evento como el usuario existen, procedemos a insertarlo
             const { rows } = await pool.query(
                 'INSERT INTO attendees (event_id, user_id) VALUES ($1, $2) RETURNING *',
                 [eventId, userId]
@@ -137,8 +156,7 @@ const eventController = {
             console.error('Error al registrar asistente:', error);
             res.status(500).json({ error: error.message });
         }
-    };
-
+    },
 
     // Controlador para consultar los asistentes a un evento
     getEventAttendees: async (req, res) => {
