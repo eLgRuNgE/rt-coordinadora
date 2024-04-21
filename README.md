@@ -1,7 +1,10 @@
 # 💪 Reto Técnico Coordinadora - Plataforma de Gestión de Eventos API
 
-🧑‍💻 Desarrollado por **Fabián A. Callejas Varela**
-😎 Contacto: [LinkedIn](https://www.linkedin.com/in/fabiancallejas/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript&logoColor=white&labelColor=101010)](https://developer.mozilla.org/es/docs/Web/JavaScript)
+[![Node.js](https://img.shields.io/badge/Node.js-green?style=for-the-badge&logo=node.js&logoColor=white&labelColor=101010)](https://nodejs.org)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue?style=for-the-badge&logo=postgresql&logoColor=white&labelColor=101010)](https://www.postgresql.org/)
+[![docker](https://img.shields.io/badge/docker-blue?style=for-the-badge&logo=docker&logoColor=white&labelColor=101010)](https://www.docker.com)
+
 
 ## Caso  Práctico:  Plataforma  de  Gestión  de  Eventos
 
@@ -332,3 +335,13 @@ Se utiliza el motor de base de datos PosgreSQL.
 | latitude       | DECIMAL(9,6)           |                             |
 | longitude      | DECIMAL(9,6)           |                             |
 | FOREIGN KEY (event_id) REFERENCES events (event_id) |
+
+
+# Hola, mi nombre es Fabian Callejas. Contactame:
+
+🧑‍💻 Desarrollado por **Fabián A. Callejas Varela**
+😎 Contacto: [LinkedIn](https://www.linkedin.com/in/fabiancallejas/)
+
+### Perfil de GitHub
+
+[![Web](https://img.shields.io/badge/GitHub-eLgRuNgE-14a1f0?style=for-the-badge&logo=github&logoColor=white&labelColor=101010)](https://github.com/eLgRuNgE)
