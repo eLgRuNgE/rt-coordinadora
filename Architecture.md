@@ -6,8 +6,9 @@ Esta es la arquitectura que he diseñado para nuestra API, combinando lo mejor d
 
 ## Diagrama
 
-![Diagrama Arquitectónico](https://drive.google.com/file/d/1Q44QQiTlNHo9ZHIa1acvOhdGCdbXWm2p/view?usp=drive_link)
-`https://drive.google.com/file/d/1Q44QQiTlNHo9ZHIa1acvOhdGCdbXWm2p/view?usp=drive_link` 
+![Diagrama Arquitectónico](https://drive.google.com/file/d/1Q44QQiTlNHo9ZHIa1acvOhdGCdbXWm2p/view)
+
+`https://drive.google.com/file/d/1Q44QQiTlNHo9ZHIa1acvOhdGCdbXWm2p/view` 
 
 
 ## Componentes Clave
