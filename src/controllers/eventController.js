@@ -232,7 +232,7 @@ const eventController = {
             const result = await getAttendeesByWeekday();
             res.json(result);
         } catch (error) {
-            console.error('Error al obtener la cantidad de asistentes por día de la semana', error);
+            console.error('Error en fetchAttendeesByWeekday:', error);
             res.status(500).json({ error: 'Internal Server Error', details: error.message });
         }
     }

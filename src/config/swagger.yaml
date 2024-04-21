@@ -409,7 +409,7 @@ paths:
         404:
           description: Event not found.
 
-  /attendees-by-weekday:
+  /events/attendees_by_weekday:
     get:
       tags:
         - 4. Asistentes a Eventos (Manejo Avanzado de Matrices)
