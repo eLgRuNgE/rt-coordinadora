@@ -12,6 +12,9 @@ Icon
 # Upload dir
 static/uploads/
 
+# Persistencia de datos del contenedor PostgreSQL
+data/postgresql/
+
 
 ### Plantilla para Node ###
 # Logs
