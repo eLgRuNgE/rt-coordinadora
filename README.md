@@ -71,10 +71,14 @@ Para más información, contacta a Fabian Callejas en [fabiancallejas@gmail.com]
 
 ## Autenticación
 Algunos edpoints estan protegidos con autenticación. Utilizamos el esquema de autenticación Bearer con JWT. Incluya el token JWT en la cabecera `Authorization` de sus solicitudes.
-
+```json
+ Bearer <token>
+```
 
 
 ## Endpoints Disponibles
+
+La aplicación se compone de 13 endpoints disponibles y agrupados. A continuación la descripción de cada uno:
 
 ### 1.1. Usuarios
 
@@ -84,14 +88,14 @@ Algunos edpoints estan protegidos con autenticación. Utilizamos el esquema de a
 - Descripción: Este endpoint autentica a un usuario mediante su nombre de usuario y contraseña.
 - **Autenticación Requerida**: No
 - Request Body:
-  ```json
-    {
-        "username": "nombredeusuario",
-        "password": "contraseña"
-    }
- ```
+```json
+{
+    "username": "nombredeusuario",
+    "password": "contraseña"
+}
+```
 - Respuestas:
-  - `200 OK`: Usuario autenticado exitosamente. Devuelve un token JWT.
+  - `200 OK`: Usuario autenticado exitosamente. #Devuelve un token JWT#.
   - `401 Unauthorized`: Fallo de autenticación.
 
 #### 2. Registro de Nuevo Usuario
@@ -100,13 +104,13 @@ Algunos edpoints estan protegidos con autenticación. Utilizamos el esquema de a
 - Descripción: Este endpoint registra un nuevo usuario.
 - **Autenticación Requerida**: No
 - Request Body:
-  ```json
-    {
-        "username": "nuevousuario",
-        "email": "usuario@example.com",
-        "password": "contraseña"
-    }
- ```
+```json
+{
+    "username": "nuevousuario",
+    "email": "usuario@example.com",
+    "password": "contraseña"
+}
+```
 - Respuestas:
   - `201 Created`: Usuario registrado exitosamente.
   - `400 Bad Request`: Datos de entrada inválidos o usuario ya existe.
@@ -134,18 +138,52 @@ Algunos edpoints estan protegidos con autenticación. Utilizamos el esquema de a
   - `404 Not Found`: Evento no encontrado.
   - `500 Internal Server Error`: Error del servidor.
 
-#### 5. Actualizar Evento
+#### 5. Obtener Asistentes de un Evento
+- Método: `GET`
+- Endpoint: `/events/{eventId}/attendees`
+- Descripción: Recupera una lista de los asistentes al evento especificado por su ID.
+- **Autenticación Requerida**: Sí, mediante JWT
+- Parámetros de URL:
+  - `eventId`: ID del evento del cual se desean obtener los asistentes.
+- Respuestas:
+  - `200 OK`: Lista de asistentes al evento.
+  - `404 Not Found`: Evento no encontrado o sin asistentes.
+
+#### 6. Obtener Lista de Eventos
+- Método: `GET`
+- Endpoint: `/events`
+- Descripción: Recupera una lista de eventos.
+- Respuestas:
+  - `200 OK`: Lista de eventos.
+
+### 1.3. Manejo de Eventos
+
+#### 7. Actualizar Evento
 - Método: `PUT`
 - Endpoint: `/events/{eventId}`
 - Descripción: Actualiza un evento existente.
 - **Autenticación Requerida**: Sí, mediante JWT
+- Request Body:
+```json
+{
+    "event_id": 0,
+    "title": "string",
+    "description": "string",
+    "start_time": "2024-04-21T20:10:43.252Z",
+    "end_time": "2024-04-21T20:10:43.252Z",
+    "location": "string",
+    "latitude": 0,
+    "longitude": 0,
+    "organizer_id": 0
+}
+```
 - Parámetros de URL:
   - `eventId`: ID numérico del evento a actualizar.
 - Respuestas:
   - `200 OK`: Evento actualizado exitosamente.
   - `404 Not Found`: Evento no encontrado.
 
-#### 6. Eliminar Evento
+#### 8. Eliminar Evento
 - Método: `DELETE`
 - Endpoint: `/events/{eventId}`
 - Descripción: Elimina un evento por su ID.
@@ -156,26 +194,44 @@ Algunos edpoints estan protegidos con autenticación. Utilizamos el esquema de a
   - `200 OK`: Evento eliminado exitosamente.
   - `404 Not Found`: Evento no encontrado.
 
-#### 7. Obtener Lista de Eventos
-- Método: `GET`
-- Endpoint: `/events`
-- Descripción: Recupera una lista de eventos.
+#### 9. Registrar Asistente a un Evento
+- Método: `POST`
+- Endpoint: `/events/{eventId}/attendees`
+- Descripción: Registra un usuario como asistente al evento especificado por su ID, esta diseñado para registrar uno a la vez.
+- **Autenticación Requerida**: Sí, mediante JWT
+- Parámetros de URL:
+  - `eventId`: ID del evento al cual se desea agregar el asistente.
+- Parámetros de Cuerpo:
+  - `userId`: ID del usuario que se está registrando como asistente.
 - Respuestas:
-  - `200 OK`: Lista de eventos.
+  - `201 Created`: Asistente registrado exitosamente.
+  - `400 Bad Request`: Solicitud incorrecta, posiblemente debido a un ID de usuario faltante o ID de evento inválido.
+  - `404 Not Found`: Evento no encontrado.
 
-#### 8. Crear Nuevo Evento
+#### 10. Crear Nuevo Evento
 - Método: `POST`
 - Endpoint: `/events`
 - Descripción: Crea un nuevo evento con los datos proporcionados en el cuerpo de la solicitud.
 - **Autenticación Requerida**: Sí, mediante JWT
+- Request Body:
+```json
+{
+    "title": "string",
+    "description": "string",
+    "start_time": "2024-04-21T20:10:17.000Z",
+    "end_time": "2024-04-21T20:10:17.000Z",
+    "location": "string",
+    "organizer_id": 0
+}
+```
 - Respuestas:
   - `201 Created`: Evento creado exitosamente.
   - `400 Bad Request`: Cuerpo de solicitud inválido o parámetros.
   - `500 Internal Server Error`: Error al crear el evento.
 
-### Carga Masiva de Datos
+### 2. Carga Masiva de Datos
 
-#### 9. Subir Archivo Excel para Carga Masiva
+#### 11. Subir Archivo Excel para Carga Masiva
 - Método: `POST`
 - Endpoint: `/bulk-upload/upload`
 - Descripción: Permite a los usuarios cargar archivos Excel con información de eventos para procesar y almacenar en la base de datos.
@@ -185,9 +241,9 @@ Algunos edpoints estan protegidos con autenticación. Utilizamos el esquema de a
   - `401 Unauthorized`: Token JWT inválido o faltante.
   - `500 Internal Server Error`: Error interno del servidor.
 
-### Consulta de Ubicaciones Cercanas
+### 3. Consulta de Ubicaciones Cercanas
 
-#### 10. Obtener Lugares Cercanos al Evento
+#### 12. Obtener Lugares Cercanos al Evento
 - Método: `GET`
 - Endpoint: `/events/{eventId}/nearby_places`
 - Descripción: Recupera una lista de lugares cerca de la ubicación del evento.
@@ -198,9 +254,9 @@ Algunos edpoints estan protegidos con autenticación. Utilizamos el esquema de a
   - `200 OK`: Lista de lugares cercanos.
   - `404 Not Found`: Evento no encontrado.
 
-### Estadísticas Avanzadas
+### 4. Estadísticas Avanzadas
 
-#### 11. Obtener Asistentes por Día de la Semana
+#### 13. Obtener Asistentes por Día de la Semana
 - Método: `GET`
 - Endpoint: `/events/attendees_by_weekday`
 - Descripción: Devuelve un objeto JSON con el recuento de asistentes por día de la semana.
