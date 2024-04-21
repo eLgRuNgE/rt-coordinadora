@@ -2,12 +2,14 @@
 *.DS_Store
 .AppleDouble
 .LSOverride
+.DS_Store
 
 # Icon must end with two \r
 Icon
 
 # Thumbnails
 ._*
+
 
 # Upload dir
 static/uploads/
@@ -61,6 +63,7 @@ build/Release
 node_modules/
 jspm_packages/
 node_modules/
+node_modules/*
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
