@@ -6,7 +6,7 @@ Esta es la arquitectura que he diseñado para nuestra API, combinando lo mejor d
 
 ## Diagrama
 
-![Diagrama Arquitectónico](https://drive.google.com/file/d/1Q44QQiTlNHo9ZHIa1acvOhdGCdbXWm2p/view)
+![Diagrama de Componentes de la API](https://raw.githubusercontent.com/eLgRuNgE/rt-coordinadora/main/static/img/DiagramaDeComponentesAPI.png)
 
 `https://drive.google.com/file/d/1Q44QQiTlNHo9ZHIa1acvOhdGCdbXWm2p/view` 
 
