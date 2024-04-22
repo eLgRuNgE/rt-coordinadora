@@ -1,5 +1,5 @@
 const express = require('express');
-// const { authenticateToken } = require('./src/middleware/auth');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const eventRoutes = require('./src/routes/eventRoutes');
 const userRoutes = require('./src/routes/userRoutes');
@@ -10,7 +10,7 @@ const app = express();
 
 // Middlewares
 app.use(cors());  // Middleare para restringir dominios
-app.use(express.json()); 
+app.use(bodyParser.json());
 
 // Rutas
 app.use('/api/users', userRoutes);

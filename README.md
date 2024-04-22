@@ -93,8 +93,8 @@ La aplicación se compone de 13 endpoints disponibles y agrupados. A continuaci�
 - Request Body:
 ```json
 {
-    "username": "nombredeusuario",
-    "password": "contraseña"
+  "username": "nombre_usuario",
+  "email": "correo@servidor.com",
 }
 ```
 - Respuestas:
@@ -109,9 +109,9 @@ La aplicación se compone de 13 endpoints disponibles y agrupados. A continuaci�
 - Request Body:
 ```json
 {
-    "username": "nuevousuario",
-    "email": "usuario@example.com",
-    "password": "contraseña"
+  "username": "nombre_usuario",
+  "email": "correo@servidor.com",
+  "password": "contraseña"
 }
 ```
 - Respuestas:
@@ -169,15 +169,15 @@ La aplicación se compone de 13 endpoints disponibles y agrupados. A continuaci�
 - Request Body:
 ```json
 {
-    "event_id": 0,
-    "title": "string",
-    "description": "string",
-    "start_time": "2024-04-21T20:10:43.252Z",
-    "end_time": "2024-04-21T20:10:43.252Z",
-    "location": "string",
-    "latitude": 0,
-    "longitude": 0,
-    "organizer_id": 0
+  "event_id": 0,
+  "title": "nombre_evento",
+  "description": "descripcion_evento",
+  "start_time": "2024-04-22T01:41:45.735Z",
+  "end_time": "2024-04-22T01:41:45.735Z",
+  "location": "string",
+  "latitude": 0,
+  "longitude": 0,
+  "organizer_id": 0
 }
 ```
 - Parámetros de URL:
@@ -219,14 +219,16 @@ La aplicación se compone de 13 endpoints disponibles y agrupados. A continuaci�
 - Request Body:
 ```json
 {
-    "title": "string",
-    "description": "string",
-    "start_time": "2024-04-21T20:10:17.000Z",
-    "end_time": "2024-04-21T20:10:17.000Z",
-    "location": "string",
-    "organizer_id": 0
+  "title": "nombre_evento",
+  "description": "descripcion_evento",
+  "start_time": "2024-04-22T01:44:08.457Z",
+  "end_time": "2024-04-22T01:44:08.457Z",
+  "location": "nombre_o_direccion_evento,_ciudad,_pais",
+  "organizer_id": 0
 }
 ```
+- Consideraciones:
+  - La dirección del evento debe especificar bien la ciudad y el pais separados por comas para una mejor georeferenciación. Por ejemplo: Jardín Botanico, Medellin, Colombia.
 - Respuestas:
   - `201 Created`: Evento creado exitosamente.
   - `400 Bad Request`: Cuerpo de solicitud inválido o parámetros.

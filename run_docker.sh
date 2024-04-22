@@ -2,16 +2,16 @@
 
 clear
 
-# Detener todos los servicios primero (opcional)
-echo "Deteniendo servicios existentes..."
+# Detener y eliminar todos los contenedores y redes existentes
+echo "Deteniendo y eliminando servicios existentes..."
 docker-compose down
 
 # Construir la imagen de Docker
 echo "Construyendo la imagen de Docker..."
 docker build -t rt-coordinadora .
 
-# Iniciar los servicios con Docker Compose
-echo "Iniciando servicios..."
+# Crear y levantar los servicios con Docker Compose
+echo "Creando y levantando servicios..."
 docker-compose up -d
 
 # Listar los contenedores en ejecución

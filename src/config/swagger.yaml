@@ -92,6 +92,9 @@ paths:
                   type: string
                 password:
                   type: string
+            example:
+              username: 'nombre_usuario'
+              password: 'contraseña'
       responses:
         200:
           description: User authenticated successfully.
@@ -128,6 +131,10 @@ paths:
                   type: string
                 password:
                   type: string
+            example:
+              username: 'nombre_usuario'
+              email: 'correo@servidor.com'
+              password: 'contraseña'
       responses:
         201:
           description: User registered successfully.
@@ -193,11 +200,21 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Event'
+            example:
+              event_id: 0
+              title: 'nombre_evento'
+              description: 'descripcion_evento'
+              start_time: '2024-04-22T01:41:45.735Z'
+              end_time: '2024-04-22T01:41:45.735Z'
+              location: 'string'
+              latitude: 0
+              longitude: 0
+              organizer_id: 0
       responses:
         200:
           description: Event updated successfully.
         404:
-          des
+          description: Event not found.
     delete:
       tags:
         - 1.3. Eventos
@@ -263,6 +280,8 @@ paths:
                 userId:
                   type: integer
                   description: The ID of the user who is registering as an attendee.
+            example:
+              userId: 1
       responses:
         201:
           description: Attendee registered successfully.
@@ -281,18 +300,18 @@ paths:
 
   /events:
     get:
-        tags:
-          - 1.2. Consulta Eventos
-        summary: Retrieves a list of events.
-        responses:
-          200:
-            description: A list of events.
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Event'
+      tags:
+        - 1.2. Consulta Eventos
+      summary: Retrieves a list of events.
+      responses:
+        200:
+          description: A list of events.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
     post:
       tags:
         - 1.3. Eventos
@@ -332,6 +351,13 @@ paths:
                 organizer_id:
                   type: integer
                   description: The ID of the user or organizer creating the event.
+            example:
+              title: 'nombre_evento'
+              description: 'descripcion_evento'
+              start_time: '2024-04-22T01:44:08.457Z'
+              end_time: '2024-04-22T01:44:08.457Z'
+              location: 'nombre_o_direccion_evento,_ciudad,_pais'
+              organizer_id: 0
       responses:
         201:
           description: Event created successfully, including geocoded latitude and longitude.

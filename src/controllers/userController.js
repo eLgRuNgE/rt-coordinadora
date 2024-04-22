@@ -25,6 +25,7 @@ async function getUserFromDatabase(username, password) {
 
 const userController = {
     registerUser: async (req, res) => {
+        console.log(process.env.DATABASE_URL);
         const { username, email, password } = req.body;
 
         const hashedPassword = await bcrypt.hash(password, 10); // Hash de la contraseña con 10 rondas de sal
@@ -36,6 +37,7 @@ const userController = {
             );
             res.status(201).json(result.rows[0]);
         } catch (error) {
+            console.log(error);
             res.status(400).json({ error: error.message });
         }
     },
