@@ -38,8 +38,8 @@ Se realiza el desarrollo de una **API RESTful** para una plataforma de gestión 
 
 ## 🖥 Ejecución
 
-* Creación del archivo de variables de entorno
-En la raiz del proyecto se debe crear un archivo .env que contiene las siguientes variables:
+### Creación del archivo de variables de entorno
+- En la raiz del proyecto se debe crear un archivo .env que contiene las siguientes variables:
 ```
 DB_USER=usuario
 DB_HOST=base_datos
@@ -52,7 +52,7 @@ MAPBOX_ACCESS_TOKEN=token_mapbox
 
 ```
 
-* En macOS / Linux
+### En macOS / Linux
 1. Inicie docker.
 2. Descargue una copia del repositorio y descomprimala en algun directorio.
 3. Abra una terminal en el directorio del proyecto y ejecute:
@@ -62,7 +62,7 @@ $ ./run_docker.sh
 ```
 4. Espere un momento a que los contenedores se levanten y se ejecute la inicialización de la base de datos.
 
-* En Windows
+### En Windows
 1. Inicie docker.
 2. Descargue una copia del repositorio y descomprimala en algun directorio.
 3. Abra una terminal en el directorio del proyecto y ejecute:
