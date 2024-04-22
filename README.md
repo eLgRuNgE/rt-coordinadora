@@ -255,6 +255,7 @@ La aplicación se compone de 13 endpoints disponibles y agrupados. A continuaci�
 - Endpoint: `/bulk-upload/upload`
 - Descripción: Permite a los usuarios cargar archivos Excel con información de eventos para procesar y almacenar en la base de datos.
 - **Autenticación Requerida**: Sí, mediante JWT
+- Plantilla: La plantilla para la carga masiva se encuentra en `/static/templates/template.xlsx`
 - Respuestas:
   - `200 OK`: Datos cargados exitosamente.
   - `401 Unauthorized`: Token JWT inválido o faltante.
