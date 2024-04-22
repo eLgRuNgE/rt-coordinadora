@@ -25,20 +25,28 @@ async function getUserFromDatabase(username, password) {
 
 const userController = {
     registerUser: async (req, res) => {
-        console.log(process.env.DATABASE_URL);
         const { username, email, password } = req.body;
 
-        const hashedPassword = await bcrypt.hash(password, 10); // Hash de la contraseña con 10 rondas de sal
-
         try {
-            const result = await pool.query(
-                'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *',
-                [username, email, hashedPassword]
-            );
-            res.status(201).json(result.rows[0]);
+            const userExistenceQuery = 'SELECT * FROM users WHERE username = $1 OR email = $2';
+            const userExistenceResult = await pool.query(userExistenceQuery, [username, email]);
+
+            if (userExistenceResult.rows.length > 0) {
+                return res.status(400).json({ error: 'El nombre de usuario o correo electrónico ya está en uso.' });
+            }
+
+            // Hash de la contraseña con 10 rondas de sal
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Insertar el nuevo usuario en la base de datos
+            const insertUserQuery = 'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *';
+            const insertUserResult = await pool.query(insertUserQuery, [username, email, hashedPassword]);
+
+            // Devolver el nuevo usuario creado
+            res.status(201).json(insertUserResult.rows[0]);
         } catch (error) {
-            console.log(error);
-            res.status(400).json({ error: error.message });
+            console.error('Error al registrar usuario:', error);
+            res.status(500).json({ error: 'Error interno del servidor al registrar usuario.' });
         }
     },
 
