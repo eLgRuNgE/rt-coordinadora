@@ -38,6 +38,20 @@ Se realiza el desarrollo de una **API RESTful** para una plataforma de gestión 
 
 ## 🖥 Ejecución
 
+* Creación del archivo de variables de entorno
+En la raiz del proyecto se debe crear un archivo .env que contiene las siguientes variables:
+```
+DB_USER=usuario
+DB_HOST=base_datos
+DB_NAME=nombre_base_datos
+DB_PASSWORD=contraseña
+DB_PORT=puerto
+DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}
+JWT_SECRET=s3cr3t
+MAPBOX_ACCESS_TOKEN=token_mapbox
+
+```
+
 * En macOS / Linux
 1. Inicie docker.
 2. Descargue una copia del repositorio y descomprimala en algun directorio.
