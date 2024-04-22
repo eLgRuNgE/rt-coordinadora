@@ -336,6 +336,9 @@ Se utiliza el motor de base de datos PosgreSQL.
 | longitude      | DECIMAL(9,6)           |                             |
 | FOREIGN KEY (event_id) REFERENCES events (event_id) |
 
+### Link a diagrama ER de la base de datos:
+[Diagrama ER Base de Datos](https://drive.google.com/file/d/15fQ3vCWXg87Q4-cLN8hgL8eF5aakMsuT/view)
+
 
 # 🤓 Conocimientos sobre Servidores, Infraestructura y DevOps 
 - Acá [DevOps](DevOps.md) se tiene una documentación detallada sobre los Triggers, Despliegues y Rollback en el contexto de la implementación de CI/CD con Jenkins y Docker para este reto técnico.
